@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://ygwtopydr0qr"]
+
+[ext_resource type="Texture2D" uid="uid://cv7mt7kfr5ewl" path="res://icon.svg" id="1_5kvid"]
+[ext_resource type="Script" path="res://CharacterBody2D.gd" id="1_8dit7"]
+[ext_resource type="Texture2D" uid="uid://cu54ycsot5al" path="res://pexels-andrea-piacquadio-3807738.jpg" id="2_6hq8q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g126x"]
+size = Vector2(138, 148)
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(182, -94)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+z_index = 9
+disable_mode = 2
+script = ExtResource("1_8dit7")
+
+[node name="Icon" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("1_5kvid")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_g126x")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -2
+
+[node name="Pexels-andrea-piacquadio-3807738" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(-35, -119)
+texture = ExtResource("2_6hq8q")
