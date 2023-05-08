@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://ygwtopydr0qr"]
 
-[ext_resource type="Script" path="res://CharacterBody2D.gd" id="1_8dit7"]
 [ext_resource type="Script" path="res://Puffin.gd" id="1_n8kei"]
 [ext_resource type="Texture2D" uid="uid://d1nobw60nyixi" path="res://Puffin_sweaty.png" id="2_6hnje"]
 [ext_resource type="Texture2D" uid="uid://bijo7j4daus3y" path="res://Untitled_Artwork.png" id="3_7i0mn"]
+[ext_resource type="Script" path="res://Aardvark.gd" id="4_h002y"]
 [ext_resource type="Texture2D" uid="uid://buvkqom48mby5" path="res://Aardvark_sweaty.png" id="4_qb6cw"]
 
 [sub_resource type="Animation" id="Animation_ahiet"]
@@ -75,6 +75,10 @@ position = Vector2(28, -13)
 rotation = 0.196445
 shape = SubResource("CapsuleShape2D_aftqa")
 
+[node name="Label" type="Label" parent="Puffin"]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -2
 
@@ -85,7 +89,7 @@ texture = ExtResource("3_7i0mn")
 
 [node name="Aardvark" type="CharacterBody2D" parent="."]
 position = Vector2(671, 411)
-script = ExtResource("1_8dit7")
+script = ExtResource("4_h002y")
 
 [node name="Pic" type="Sprite2D" parent="Aardvark"]
 rotation = -0.776672
@@ -102,6 +106,10 @@ position = Vector2(-14, 1)
 rotation = 1.5708
 scale = Vector2(0.289579, 0.289579)
 shape = SubResource("CapsuleShape2D_47w4a")
+
+[node name="Label" type="Label" parent="Aardvark"]
+offset_right = 40.0
+offset_bottom = 23.0
 
 [connection signal="bumped" from="Puffin" to="Aardvark" method="_on_bumped"]
 [connection signal="bumped" from="Aardvark" to="Puffin" method="_on_bumped"]

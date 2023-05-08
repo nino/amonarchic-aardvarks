@@ -25,12 +25,18 @@ func _walking_animation():
 	else:
 		$Pic.rotation = lerp_angle($Pic.rotation, 0, 0.1)
 
-# handle `bumped` signal
+func _update_debug_text():
+	var active_string = "not active"
+	if is_active:
+		active_string = "active"
+	$Label.text = "The " + name + " is " + active_string
+
 func _on_bumped():
-	print("Singal received")
+	print("The ", name, " received a signal, and is_active has been ", is_active)
+	_update_debug_text()
 	is_active = !is_active
 
-func perform_chestbump():
+func _perform_chestbump():
 	var animation = "chestbump_animation_left"
 	if $Pic.flip_h:
 		animation = "chestbump_animation"
@@ -39,16 +45,20 @@ func perform_chestbump():
 	$Pic/PuffinAnimations.play(animation)
 
 	emit_signal("bumped")
+	_update_debug_text()
 
 
 func _chestbump():
 	if Input.is_key_pressed(KEY_Q):
-		if chestbump_is_pressed == false:
-			perform_chestbump()
+		if chestbump_is_pressed == false && is_active:
+			_perform_chestbump()
+			_update_debug_text()
 		chestbump_is_pressed = true
 	else:
 		chestbump_is_pressed = false
 
+func _process(delta):
+	_update_debug_text()
 
 func _physics_process(delta):
 	if is_active:
