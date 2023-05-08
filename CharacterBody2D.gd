@@ -7,21 +7,23 @@ const JUMP_VELOCITY = -400.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-
-func _physics_process(delta):
-	# Initialize an empty Vector2 for movement direction
-	# Add the gravity.
-	# if not is_on_floor():
-	# 	velocity.y += gravity * delta
-
-	# Handle Jump.
-	# if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-	# 	velocity.y = JUMP_VELOCITY
-
+func _walking_animation():
 	# Flip the sprite based on the direction.
 	if velocity.x != 0:
 		$PuffinSweaty.flip_h = velocity.x >= 0
 
+	var time = Time.get_ticks_msec() / 1000.0
+	var angle_offset = sin(time * 24.0) * 0.4
+	
+	# If he is walking, alternate between rotating 20degrees and -20degrees.
+	if velocity.x != 0 || velocity.y != 0:
+		$PuffinSweaty.rotation = lerp_angle($PuffinSweaty.rotation, 0.1 * sign(velocity.x) + angle_offset, 0.1)
+	else:
+		$PuffinSweaty.rotation = lerp_angle($PuffinSweaty.rotation, 0, 0.1)
+
+
+func _physics_process(delta):
+	_walking_animation()
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
