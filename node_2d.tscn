@@ -1,8 +1,28 @@
-[gd_scene load_steps=5 format=3 uid="uid://ygwtopydr0qr"]
+[gd_scene load_steps=7 format=3 uid="uid://ygwtopydr0qr"]
 
 [ext_resource type="Script" path="res://CharacterBody2D.gd" id="1_8dit7"]
 [ext_resource type="Texture2D" uid="uid://d1nobw60nyixi" path="res://Puffin_sweaty.png" id="2_6hnje"]
 [ext_resource type="Texture2D" uid="uid://cu54ycsot5al" path="res://pexels-andrea-piacquadio-3807738.jpg" id="2_6hq8q"]
+
+[sub_resource type="Animation" id="Animation_ahiet"]
+resource_name = "chestbump_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.776672, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6nebl"]
+_data = {
+"chestbump_animation": SubResource("Animation_ahiet")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g126x"]
 size = Vector2(138, 148)
@@ -20,6 +40,11 @@ position = Vector2(12, 4)
 scale = Vector2(0.320144, 0.320144)
 texture = ExtResource("2_6hnje")
 flip_h = true
+
+[node name="PuffinAnimations" type="AnimationPlayer" parent="CharacterBody2D/PuffinSweaty"]
+libraries = {
+"": SubResource("AnimationLibrary_6nebl")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(0, -1)

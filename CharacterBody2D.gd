@@ -21,9 +21,18 @@ func _walking_animation():
 	else:
 		$PuffinSweaty.rotation = lerp_angle($PuffinSweaty.rotation, 0, 0.1)
 
+func _chestbump():
+	if Input.is_key_pressed(KEY_Q):
+		if $PuffinSweaty/PuffinAnimations.is_playing() && $PuffinSweaty/PuffinAnimations.current_animation_position > 0.1:
+			$PuffinSweaty/PuffinAnimations.seek(0)
+		# trigger chestbump_animation
+		$PuffinSweaty/PuffinAnimations.play("chestbump_animation")
+		print("wtf")
+
 
 func _physics_process(delta):
 	_walking_animation()
+	_chestbump()
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
