@@ -7,6 +7,8 @@ const JUMP_VELOCITY = -400.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+var chestbump_is_pressed = false
+
 func _walking_animation():
 	# Flip the sprite based on the direction.
 	if velocity.x != 0:
@@ -22,12 +24,16 @@ func _walking_animation():
 		$PuffinSweaty.rotation = lerp_angle($PuffinSweaty.rotation, 0, 0.1)
 
 func _chestbump():
+	var animation = "chestbump_animation_left"
+	if $PuffinSweaty.flip_h:
+		animation = "chestbump_animation"
 	if Input.is_key_pressed(KEY_Q):
-		if $PuffinSweaty/PuffinAnimations.is_playing() && $PuffinSweaty/PuffinAnimations.current_animation_position > 0.1:
+		if chestbump_is_pressed == false:
 			$PuffinSweaty/PuffinAnimations.seek(0)
-		# trigger chestbump_animation
-		$PuffinSweaty/PuffinAnimations.play("chestbump_animation")
-		print("wtf")
+			$PuffinSweaty/PuffinAnimations.play(animation)
+		chestbump_is_pressed = true
+	else:
+		chestbump_is_pressed = false
 
 
 func _physics_process(delta):
