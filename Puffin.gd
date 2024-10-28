@@ -4,4 +4,3 @@ extends "res://CharacterBody2D.gd"
 func _ready():
 	is_active = true
 	name = "Puffin"
-
