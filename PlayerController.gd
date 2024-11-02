@@ -20,7 +20,6 @@ func _physics_process(_delta: float):
 	if Input.is_key_pressed(KEY_Q):
 		if !chestbump_is_pressed:
 			var next_active = controlled_character.perform_chestbump()
-			print(next_active)
 			if next_active:
 				switch_control_to(next_active)
 		chestbump_is_pressed = true
