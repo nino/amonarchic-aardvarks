@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://ygwtopydr0qr"]
+[gd_scene load_steps=12 format=3 uid="uid://ygwtopydr0qr"]
 
 [ext_resource type="Script" path="res://Puffin.gd" id="1_n8kei"]
 [ext_resource type="Texture2D" uid="uid://d1nobw60nyixi" path="res://Puffin_sweaty.png" id="2_6hnje"]
 [ext_resource type="Texture2D" uid="uid://bijo7j4daus3y" path="res://Untitled_Artwork.png" id="3_7i0mn"]
 [ext_resource type="Script" path="res://Aardvark.gd" id="4_h002y"]
 [ext_resource type="Texture2D" uid="uid://buvkqom48mby5" path="res://Aardvark_sweaty.png" id="4_qb6cw"]
+[ext_resource type="Script" path="res://PlayerController.gd" id="6_lsu02"]
 
 [sub_resource type="Animation" id="Animation_ahiet"]
 resource_name = "chestbump_animation"
@@ -52,7 +53,7 @@ height = 538.713
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Puffin" type="CharacterBody2D" parent="."]
+[node name="Puffin" type="CharacterBody2D" parent="." groups=["Characters"]]
 z_index = 9
 position = Vector2(321, 396)
 disable_mode = 2
@@ -60,7 +61,6 @@ script = ExtResource("1_n8kei")
 
 [node name="Pic" type="Sprite2D" parent="Puffin"]
 position = Vector2(12, 4)
-rotation = 0.776672
 scale = Vector2(0.320144, 0.320144)
 texture = ExtResource("2_6hnje")
 flip_h = true
@@ -76,6 +76,7 @@ rotation = 0.196445
 shape = SubResource("CapsuleShape2D_aftqa")
 
 [node name="Label" type="Label" parent="Puffin"]
+visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -87,12 +88,11 @@ position = Vector2(967.25, 506)
 scale = Vector2(0.984131, 0.618652)
 texture = ExtResource("3_7i0mn")
 
-[node name="Aardvark" type="CharacterBody2D" parent="."]
+[node name="Aardvark" type="CharacterBody2D" parent="." groups=["Characters"]]
 position = Vector2(671, 411)
 script = ExtResource("4_h002y")
 
 [node name="Pic" type="Sprite2D" parent="Aardvark"]
-rotation = -0.776672
 scale = Vector2(0.289579, 0.289579)
 texture = ExtResource("4_qb6cw")
 
@@ -108,8 +108,13 @@ scale = Vector2(0.289579, 0.289579)
 shape = SubResource("CapsuleShape2D_47w4a")
 
 [node name="Label" type="Label" parent="Aardvark"]
+visible = false
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("6_lsu02")
+default_character_path = NodePath("../Aardvark")
 
 [connection signal="bumped" from="Puffin" to="Aardvark" method="_on_bumped"]
 [connection signal="bumped" from="Aardvark" to="Puffin" method="_on_bumped"]

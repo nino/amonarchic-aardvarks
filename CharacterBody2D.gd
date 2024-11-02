@@ -2,14 +2,14 @@ extends CharacterBody2D
 
 signal bumped
 
-const SPEED = 300.0
+const SPEED = 400.0
 const JUMP_VELOCITY = -400.0
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_active = false
 
-var chestbump_is_pressed = false
+# Remove input handling vars
+# var chestbump_is_pressed = false
 
 func _walking_animation():
 	# Flip the sprite based on the direction.
@@ -31,52 +31,45 @@ func _update_debug_text():
 		active_string = "active"
 	$Label.text = "The " + name + " is " + active_string
 
-func _on_bumped():
-	print("The ", name, " received a signal, and is_active has been ", is_active)
-	_update_debug_text()
-	is_active = !is_active
+func move_in_direction(x_direction: float, y_direction: float):
+	if !is_active:
+		return
+		
+	if y_direction:
+		velocity.y = y_direction * SPEED
+	else:
+		velocity.y = move_toward(velocity.y, 0, SPEED)
+		
+	if x_direction:
+		velocity.x = x_direction * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
 
-func _perform_chestbump():
+	move_and_slide()
+	# _walking_animation()
+
+func perform_chestbump():
+	if !is_active:
+		return
+		
+	var nearby_character: CharacterBody2D
+	for character in get_tree().get_nodes_in_group("Characters"):
+		var dist = character.global_position.distance_to(global_position)
+		if character != self and dist < 200:
+			nearby_character = character
+			break
+			
 	var animation = "chestbump_animation_left"
 	if $Pic.flip_h:
 		animation = "chestbump_animation"
 	
 	$Pic/PuffinAnimations.seek(0)
 	$Pic/PuffinAnimations.play(animation)
-
 	emit_signal("bumped")
-	_update_debug_text()
-
-
-func _chestbump():
-	if Input.is_key_pressed(KEY_Q):
-		if chestbump_is_pressed == false && is_active:
-			_perform_chestbump()
-			_update_debug_text()
-		chestbump_is_pressed = true
-	else:
-		chestbump_is_pressed = false
-
-func _process(delta):
-	_update_debug_text()
+	return nearby_character
 
 func _physics_process(delta):
 	if is_active:
 		_walking_animation()
-		_chestbump()
 
-		# Get the input direction and handle the movement/deceleration.
-		# As good practice, you should replace UI actions with custom gameplay actions.
-		var x_direction = Input.get_axis("ui_left", "ui_right")
-		var y_direction = Input.get_axis("ui_up", "ui_down")
-		if y_direction:
-			velocity.y = y_direction * SPEED
-		else:
-			velocity.y = move_toward(velocity.y, 0, SPEED)
-			
-		if x_direction:
-			velocity.x = x_direction * SPEED
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-
-		move_and_slide()
+	_update_debug_text()
