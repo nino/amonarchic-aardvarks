@@ -19,7 +19,7 @@ func _walking_animation():
 	var time = Time.get_ticks_msec() / 1000.0
 	var angle_offset = sin(time * 24.0) * 0.4
 	
-	# If he is walking, alternate between rotating 20degrees and -20degrees.
+	# If we're walking, alternate between rotating 20degrees and -20degrees.
 	if velocity.x != 0 || velocity.y != 0:
 		$Pic.rotation = lerp_angle($Pic.rotation, 0.1 * sign(velocity.x) + angle_offset, 0.1)
 	else:
