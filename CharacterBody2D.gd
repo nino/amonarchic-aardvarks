@@ -17,7 +17,11 @@ func _walking_animation():
 	
 	# If we're walking, alternate between rotating 20degrees and -20degrees.
 	if velocity.x != 0 || velocity.y != 0:
-		$Pic.rotation = lerp_angle($Pic.rotation, 0.1 * sign(velocity.x) + angle_offset, 0.1)
+		$Pic.rotation = lerp_angle(
+			$Pic.rotation,
+			0.1 * sign(velocity.x) + angle_offset,
+			0.1
+		)
 	else:
 		$Pic.rotation = lerp_angle($Pic.rotation, 0, 0.1)
 
