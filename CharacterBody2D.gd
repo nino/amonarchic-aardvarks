@@ -8,11 +8,7 @@ const JUMP_VELOCITY = -400.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_active = false
 
-# Remove input handling vars
-# var chestbump_is_pressed = false
-
 func _walking_animation():
-	# Flip the sprite based on the direction.
 	if velocity.x != 0:
 		$Pic.flip_h = velocity.x >= 0
 
@@ -46,7 +42,6 @@ func move_in_direction(x_direction: float, y_direction: float):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
-	# _walking_animation()
 
 func perform_chestbump():
 	if !is_active:
